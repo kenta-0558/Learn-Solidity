@@ -6,6 +6,8 @@ interface IERC20 {
     function totalSupply() external view returns (uint256);
     function balanceOf(address account) external view returns (uint256);
     function transfer(address recipient, uint256 amount) external returns (bool);
+    
+    event Transfer(address indexed from, address indexed to, uint256 amount);
 }
 
 library SafeMath {
@@ -19,6 +21,7 @@ library SafeMath {
       return c;
     }
 }
+
 
 contract KiichiToken is IERC20 {
     
@@ -52,7 +55,7 @@ contract KiichiToken is IERC20 {
         
         balances[msg.sender] = balances[msg.sender].sub(_amount);
         balances[_recipient] =  balances[_recipient].add(_amount);
-        
+        emit Transfer(msg.sender, _recipient, _amount);
         return true;
     }
 }
