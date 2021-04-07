@@ -3,7 +3,7 @@ pragma solidity >=0.4.16 <0.9.0;
 
 
 interface IERC20 {
-    function getTotalSupply() external view returns (uint256);
+    function totalSupply() external view returns (uint256);
 }
 
 contract KiichiToken is IERC20 {
@@ -13,13 +13,13 @@ contract KiichiToken is IERC20 {
     string public constant symbol = "KTT";
     uint8 public constant decimals = 18;
     
-    uint256 totalSupply;
+    uint256 totalSupply_;
     
     constructor(uint256 _totalSupply) public {
-        totalSupply = _totalSupply;
+        totalSupply_ = _totalSupply;
     }
     
-    function getTotalSupply() public override view returns (uint256) {
-        return totalSupply;
+    function totalSupply() public override view returns (uint256) {
+        return totalSupply_;
     }
 }
