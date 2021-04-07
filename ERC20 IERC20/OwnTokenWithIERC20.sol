@@ -15,7 +15,7 @@ contract KiichiToken is IERC20 {
     
     uint256 totalSupply_;
     
-    constructor(uint256 _totalSupply) public {
+    constructor(uint256 _totalSupply) {
         totalSupply_ = _totalSupply;
     }
     
