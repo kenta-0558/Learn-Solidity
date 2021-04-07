@@ -5,6 +5,19 @@ pragma solidity >=0.4.16 <0.9.0;
 interface IERC20 {
     function totalSupply() external view returns (uint256);
     function balanceOf(address account) external view returns (uint256);
+    function transfer(address recipient, uint256 amount) external returns (bool);
+}
+
+library SafeMath {
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+      assert(b <= a);
+      return a - b;
+    }
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+      uint256 c = a + b;
+      assert(c >= a);
+      return c;
+    }
 }
 
 contract KiichiToken is IERC20 {
@@ -18,6 +31,8 @@ contract KiichiToken is IERC20 {
     
     uint256 totalSupply_;
     
+    using SafeMath for uint256;
+    
     constructor(uint256 _totalSupply) {
         totalSupply_ = _totalSupply;
         balances[msg.sender] = totalSupply_;
@@ -29,5 +44,15 @@ contract KiichiToken is IERC20 {
     
     function balanceOf(address _accountOwner) public override view returns (uint256) {
         return balances[_accountOwner];
+    }
+    
+    function transfer(address _recipient, uint256 _amount) public override returns (bool) {
+        
+        require(balances[msg.sender] >= _amount, "you do not have enough token in your account");
+        
+        balances[msg.sender] = balances[msg.sender].sub(_amount);
+        balances[_recipient] =  balances[_recipient].add(_amount);
+        
+        return true;
     }
 }
