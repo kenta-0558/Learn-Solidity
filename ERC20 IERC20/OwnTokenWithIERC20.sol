@@ -6,6 +6,7 @@ interface IERC20 {
     function totalSupply() external view returns (uint256);
     function balanceOf(address account) external view returns (uint256);
     function transfer(address recipient, uint256 amount) external returns (bool);
+    function allowance(address owner, address spender) external returns (uint256);
     
     event Transfer(address indexed from, address indexed to, uint256 amount);
 }
@@ -32,6 +33,8 @@ contract KiichiToken is IERC20 {
     
     mapping (address => uint256) balances;
     
+    mapping (address => mapping(address => uint256)) allowances;
+    
     uint256 totalSupply_;
     
     using SafeMath for uint256;
@@ -57,5 +60,9 @@ contract KiichiToken is IERC20 {
         balances[_recipient] =  balances[_recipient].add(_amount);
         emit Transfer(msg.sender, _recipient, _amount);
         return true;
+    }
+    
+    function allowance(address _owner, address _spender) public override view returns (uint256) {
+        return allowances[_owner][_spender];
     }
 }
