@@ -8,7 +8,7 @@ interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
     function allowance(address owner, address spender) external returns (uint256);
     function approve(address spender, uint256 amount) external returns (bool);
-    // function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
     
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approve(address indexed owner, address indexed spender, uint256 value);
@@ -72,6 +72,19 @@ contract KiichiToken is IERC20 {
     function approve(address _spender, uint256 _amount) public override returns (bool) {
         allowances[msg.sender][_spender] = _amount;
         emit Transfer(msg.sender, _spender, _amount);
+        return true;
+    }
+    
+    function transferFrom(address _sender, address _recipient, uint256 _amount) public override returns (bool) {
+        require(balances[_sender] >= _amount);
+        require(allowances[_sender][msg.sender] >= _amount);
+        
+        balances[_sender] = balances[_sender].sub(_amount);
+        allowances[_sender][msg.sender] = allowances[_sender][msg.sender].sub(_amount);
+        balances[_recipient] = balances[_recipient].add(_amount);
+        
+        emit Transfer(_sender, _recipient, _amount);
+        
         return true;
     }
 }
