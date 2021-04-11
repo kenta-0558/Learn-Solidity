@@ -48,3 +48,30 @@ contract Extra {
     }
     
 }
+
+contract Extra2 {
+    
+    Base base;
+    
+    function setBase(address _address) public {
+        base = Base(_address);
+    }
+    
+    function getBaseAddress() public view returns (address) {
+        return address(base);
+    }
+    
+    function baseSetAB(uint _a, string memory _b) public returns (bool success) {
+        base.setAB(_a, _b);
+        return true;
+    }
+    
+    function getBaseA() public view returns (uint) {
+        return base.getA();
+    }
+    
+    function getBaseB() public view returns (string memory) {
+        return base.getB();
+    }
+    
+}
