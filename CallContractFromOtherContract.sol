@@ -1,4 +1,5 @@
 // https://ethereum.stackexchange.com/questions/45277/calling-one-contract-to-another-contract-method
+// https://ethereum.stackexchange.com/questions/1599/basic-example-of-interaction-between-2-contracts
 
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.22 <0.9.0;
