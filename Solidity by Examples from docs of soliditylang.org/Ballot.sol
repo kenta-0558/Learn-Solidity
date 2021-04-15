@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.22 <0.9.0;
 
+
 contract Ballot {
     
     struct Voter {
@@ -16,4 +17,10 @@ contract Ballot {
         bytes32 name;
         uint voteCount;
     }
+    
+    address public chairperson;
+    
+    mapping(address => Voter) public voters;
+    
+    Proposal[] public proposals;
 }
