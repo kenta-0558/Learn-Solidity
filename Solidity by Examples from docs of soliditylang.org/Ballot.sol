@@ -58,4 +58,24 @@ contract Ballot {
         
         proposals[_proposalIndex].voteCount += sender.weight; 
     }
+
+    function getWinnerName() public view returns (bytes32 _winnerName) {
+        
+        uint winnerProposalIndex = getWinnerProposalIndex();
+        
+        _winnerName = proposals[winnerProposalIndex].name;
+    }
+    
+    function getWinnerProposalIndex() internal view returns (uint _winnerProposalIndex) {
+        
+        uint winnerVoteCount = 0;
+        
+        for (uint i = 0; i < proposals.length; i++) {
+            if (proposals[i].voteCount > winnerVoteCount) {
+                winnerVoteCount = proposals[i].voteCount;
+                _winnerProposalIndex = i;
+            }    
+        } 
+    }
+
 }
