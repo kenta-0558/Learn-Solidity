@@ -45,4 +45,17 @@ contract Ballot {
         
         voters[_voter].weight = 1;
     }
+
+    function vote(uint _proposalIndex) public {
+        
+        Voter storage sender = voters[msg.sender];
+        
+        require(!sender.voted, "You have already voted");
+        require(sender.weight != 0, "You do not have right to vote");
+        
+        sender.vote = _proposalIndex;
+        sender.voted = true;
+        
+        proposals[_proposalIndex].voteCount += sender.weight; 
+    }
 }
