@@ -59,6 +59,34 @@ contract Ballot {
         proposals[_proposalIndex].voteCount += sender.weight; 
     }
 
+    function delegate(address _to) public {
+        
+        Voter storage voter = voters[msg.sender];
+        
+        require(_to != address(0), "please give address which you delegate.");
+        require(!voter.voted, "you have already voted");
+        require(_to != msg.sender, "you can not choose yourself");
+        
+        while (voters[_to].delegate != address(0)) {
+            _to = voters[_to].delegate;
+            
+            require(_to != msg.sender, "Found loop in delegation");
+        }
+        
+        
+        voter.voted = true;
+        voter.delegate = _to;
+        
+        Voter storage delegate_ = voters[_to];
+        
+        if (delegate_.voted) {
+            proposals[delegate_.vote].voteCount += voter.weight;
+        } else {
+            delegate_.weight += voter.weight;
+        }
+        
+    }
+
     function getWinnerName() public view returns (bytes32 _winnerName) {
         
         uint winnerProposalIndex = getWinnerProposalIndex();
