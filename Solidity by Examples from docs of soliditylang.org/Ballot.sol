@@ -36,4 +36,13 @@ contract Ballot {
             }));
         }
     }
+
+    function giveRightToVote(address _voter) public {
+        
+        require(chairperson == msg.sender, "You can not give right to vote");
+        require(!voters[_voter].voted, "This voter already voted.");
+        require(voters[_voter].weight == 0);
+        
+        voters[_voter].weight = 1;
+    }
 }
