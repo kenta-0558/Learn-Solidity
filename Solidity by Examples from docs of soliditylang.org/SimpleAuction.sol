@@ -8,4 +8,8 @@ contract SimpleAuction {
     
     address public highestBidder;
     uint public highestBid;
+
+    bool ended;
+    
+    mapping(address => uint) pendingReturns;
 }
