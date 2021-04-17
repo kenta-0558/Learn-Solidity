@@ -15,4 +15,8 @@ contract CrowdFunding {
         uint amount;
         mapping (uint => Funder) funders;
     }
+
+    mapping(uint =>  Campaign) campaigns;
+    
+    uint numCampaings;
 }
