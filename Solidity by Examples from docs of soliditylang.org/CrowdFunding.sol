@@ -36,5 +36,19 @@ contract CrowdFunding {
         selectedCampaign.amount += msg.value;
     }
 
+     function checkReachGoal(uint _campaignID) public returns (bool) {
+        Campaign storage selectedCampaign = campaigns[_campaignID];
+        
+        if (selectedCampaign.amount < selectedCampaign.fundingGoal) {
+            return false;
+        }
+        
+        uint reachedAmount = selectedCampaign.amount;
+        selectedCampaign.amount = 0;
+        selectedCampaign.beneficiary.transfer(reachedAmount);
+        
+        return true;
+    }
+
 
 }
