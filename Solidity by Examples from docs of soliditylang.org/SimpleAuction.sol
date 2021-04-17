@@ -23,4 +23,19 @@ contract SimpleAuction {
         beneficiary = _beneficiary;
         auctionEndTime = block.timestamp + _biddingTime;
     }
+
+    function bid() public payable {
+        
+        require(auctionEndTime >= block.timestamp);
+        require(msg.value > highestBid, "Another bid is higher than yours");
+        
+        if (highestBid != 0) {
+            pendingReturns[highestBidder] += highestBid;
+        }
+        
+        highestBidder = msg.sender;
+        highestBid = msg.value;
+        
+        emit HighestBidIncreased(msg.sender, msg.value);
+    }
 }
