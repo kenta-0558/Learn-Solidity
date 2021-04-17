@@ -15,4 +15,12 @@ contract SimpleAuction {
 
     event HighestBidIncreased(address bidder, uint amount);
     event AuctionEnded(address winner, uint amount);
+
+    constructor(
+        uint _biddingTime,
+        address payable _beneficiary
+    ) {
+        beneficiary = _beneficiary;
+        auctionEndTime = block.timestamp + _biddingTime;
+    }
 }
