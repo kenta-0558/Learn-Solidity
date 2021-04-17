@@ -16,7 +16,16 @@ contract CrowdFunding {
         mapping (uint => Funder) funders;
     }
 
-    mapping(uint =>  Campaign) campaigns;
+    mapping(uint =>  Campaign) public campaigns;
     
-    uint numCampaings;
+    uint numCampaigns;
+
+    function createNewCampaign(address payable _beneficiary, uint _fundingGoal) public returns (uint _campaignID) {
+        _campaignID = numCampaigns++;
+        Campaign storage newCampaign = campaigns[numCampaigns];
+        newCampaign.beneficiary = _beneficiary;
+        newCampaign.fundingGoal = _fundingGoal;
+    }
+
+
 }
