@@ -27,5 +27,14 @@ contract CrowdFunding {
         newCampaign.fundingGoal = _fundingGoal;
     }
 
+    function contribute(uint _campaignID) public payable {
+        
+        Campaign storage selectedCampaign = campaigns[_campaignID];
+        
+        uint _numberFunders = selectedCampaign.numfunders++;
+        selectedCampaign.funders[_numberFunders] = Funder({funderAddress: msg.sender, amount: msg.value});
+        selectedCampaign.amount += msg.value;
+    }
+
 
 }
