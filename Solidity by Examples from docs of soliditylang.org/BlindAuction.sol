@@ -7,4 +7,16 @@ contract BlindAuction {
         bytes32 blindedBid;
         uint deposit;
     }
+
+    address payable public beneficiary;
+    uint public biddingEnd;
+    uint public revealEnd;
+    bool public ended;
+    
+    address public highestBidder;
+    uint public highestBid;
+    
+    mapping(address => Bid[]) public bids;
+    
+    mapping(address => uint) pendingReturns;
 }
