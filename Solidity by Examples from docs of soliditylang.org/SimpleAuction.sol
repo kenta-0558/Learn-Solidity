@@ -55,4 +55,15 @@ contract SimpleAuction {
         
         return true;
     }
+
+     function auctionEnd() public {
+        
+        require(block.timestamp >= auctionEndTime, "auction has been not ended");
+        require(!ended, "auction is finished");
+        
+        ended = true;
+        emit AuctionEnded(highestBidder, highestBid);
+        
+        beneficiary.transfer(highestBid);
+    }
 }
