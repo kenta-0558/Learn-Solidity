@@ -22,6 +22,16 @@ contract BlindAuction {
 
     event AuctionEnded(address winner, uint highestBid);
 
+    modifier onlyBefore(uint _time) {
+        require(block.timestamp < _time);
+        _;
+    }
+    
+    modifier onlyAfter(uint _time) {
+        require(block.timestamp > _time);
+        _;
+    }
+
     constructor(
         uint _biddingTime,
         uint _revealTime,
