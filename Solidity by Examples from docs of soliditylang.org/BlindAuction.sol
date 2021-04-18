@@ -21,4 +21,14 @@ contract BlindAuction {
     mapping(address => uint) pendingReturns;
 
     event AuctionEnded(address winner, uint highestBid);
+
+    constructor(
+        uint _biddingTime,
+        uint _revealTime,
+        address payable _beneficiary
+    ) {
+        beneficiary = _beneficiary;
+        biddingEnd = block.timestamp + _biddingTime;
+        revealEnd = biddingEnd + _revealTime;
+    }
 }
