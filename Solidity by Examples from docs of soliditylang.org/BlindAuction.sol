@@ -19,4 +19,6 @@ contract BlindAuction {
     mapping(address => Bid[]) public bids;
     
     mapping(address => uint) pendingReturns;
+
+    event AuctionEnded(address winner, uint highestBid);
 }
