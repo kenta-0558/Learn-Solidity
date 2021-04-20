@@ -43,3 +43,9 @@ contract TicketBase {
         CancelTicket(_owner, _ticketID, block.timestamp);
     } 
 }
+
+contract IssueVipTicket is TicketBase {
+    
+    uint constant VIP_TICKETS_LIMITS = 5;
+    
+}
