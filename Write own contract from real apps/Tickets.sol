@@ -19,14 +19,18 @@ contract TicketBase {
     
     function _createTicket(uint _area, string memory _ticketType, address _owner) internal returns (uint _ticketID) {
         
+        uint _createdAt = block.timestamp;
+        
         tickets.push(Ticket({
             area: _area,
             ticketType: _ticketType,
-            createdAt: block.timestamp
+            createdAt: _createdAt
         }));
         
         _ticketID = tickets.length - 1;
         
         ticketIndexToOwner[_ticketID] = _owner;
+        
+        emit IssueNewTicket(_owner, _ticketID, _createdAt);
     }
 }
