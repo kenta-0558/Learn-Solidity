@@ -33,4 +33,13 @@ contract TicketBase {
         
         emit IssueNewTicket(_owner, _ticketID, _createdAt);
     }
+    
+    function _deleteTicket(address _owner, uint _ticketID) external {
+        
+        require(ticketIndexToOwner[_ticketID] == _owner, "You gave wrong owner address or ticket ID!");
+        
+        delete tickets[_ticketID];
+        
+        CancelTicket(_owner, _ticketID, block.timestamp);
+    } 
 }
