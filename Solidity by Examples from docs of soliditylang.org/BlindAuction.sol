@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.22 <0.9.0;
 
+
 contract BlindAuction {
     
     struct Bid {
@@ -51,5 +52,12 @@ contract BlindAuction {
             blindedBid: _blindedBid,
             deposit: msg.value
         }));    
+    }
+
+    function auctionEnd() public onlyAfter(revealEnd) {
+        require(!ended);
+        emit AuctionEnded(highestBidder, highestBid);
+        ended = true;
+        beneficiary.transfer(highestBid);
     }
 }
