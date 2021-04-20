@@ -17,7 +17,7 @@ contract TicketBase {
     event IssueNewTicket(address owner, uint ticketID, uint createdAt);
     event CancelTicket(address owner, uint ticketID, uint canceledAt);
     
-    function _createTicket(uint _area, string memory _ticketType) internal returns (uint _ticketID) {
+    function _createTicket(uint _area, string memory _ticketType, address _owner) internal returns (uint _ticketID) {
         
         tickets.push(Ticket({
             area: _area,
@@ -27,6 +27,6 @@ contract TicketBase {
         
         _ticketID = tickets.length - 1;
         
-        ticketIndexToOwner[_ticketID] = msg.sender;
+        ticketIndexToOwner[_ticketID] = _owner;
     }
 }
