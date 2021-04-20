@@ -14,4 +14,7 @@ contract TicketBase {
     Ticket[] public tickets;
     
     mapping(uint => address) public ticketIndexToOwner;
+
+    event IssueNewTicket(address owner, uint ticketID, uint createdAt);
+    event CancelTicket(address owner, uint ticketID, uint canceledAt);
 }
