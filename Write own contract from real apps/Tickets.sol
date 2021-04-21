@@ -66,8 +66,17 @@ contract TicketBase is TicketAccessControl {
 contract IssueVipTicket is TicketBase {
     
     uint constant VIP_TICKETS_LIMITS = 5;
+    
+    uint issuedTicketsCount;
 
-    // function createVipTicket() onlyOwner returns (uint _ticket)
+    function createVipTicket(uint _area, string memory _ticketType, address _owner) public onlyOwner(msg.sender) {
+        
+        require(issuedTicketsCount <= 5, "You can not issue more VIP Ticket");
+        
+        _createTicket(_area, _ticketType, _owner);
+        
+        issuedTicketsCount++;
+    }
     
 }
 
