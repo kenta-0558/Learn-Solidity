@@ -2,7 +2,18 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 
-contract TicketBase {
+contract TicketAccessControl {
+    
+    address owner;
+    
+    modifier onlyOwner(address _owner) {
+        require(owner == _owner, "");
+        _;
+    }
+}
+
+
+contract TicketBase is TicketAccessControl {
     
     struct Ticket {
         uint area;
@@ -40,12 +51,21 @@ contract TicketBase {
         
         delete tickets[_ticketID];
         
-        CancelTicket(_owner, _ticketID, block.timestamp);
+        emit CancelTicket(_owner, _ticketID, block.timestamp);
     } 
 }
+
 
 contract IssueVipTicket is TicketBase {
     
     uint constant VIP_TICKETS_LIMITS = 5;
+    
+}
+
+contract TicketCore is IssueVipTicket {
+    
+    constructor() public {
+        owner = msg.sender;
+    }
     
 }
