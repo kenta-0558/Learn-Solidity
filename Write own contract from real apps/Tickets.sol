@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract TicketAccessControl {
     
-    address owner;
+    address public owner;
     
     modifier onlyOwner(address _owner) {
         require(owner == _owner, "");
@@ -58,6 +58,8 @@ contract TicketBase is TicketAccessControl {
         
         delete tickets[_ticketID];
         
+        ticketIndexToOwner[_ticketID] = address(0);
+        
         emit CancelTicket(_owner, _ticketID, block.timestamp);
     } 
 }
@@ -69,15 +71,16 @@ contract IssueVipTicket is TicketBase {
     
     uint issuedTicketsCount;
 
-    function createVipTicket(uint _area, string memory _ticketType, address _owner) public onlyOwner(msg.sender) {
+    function createVipTicket(uint _area, string memory _ticketType) public onlyOwner(msg.sender) {
         
-        require(issuedTicketsCount <= 5, "You can not issue more VIP Ticket");
+        require(issuedTicketsCount <= VIP_TICKETS_LIMITS, "You can not issue more VIP Ticket");
         
+        address _owner = msg.sender;
         _createTicket(_area, _ticketType, _owner);
         
         issuedTicketsCount++;
     }
-
+    
     function giveVipTicket(uint _ticketID, address _newOwner) public onlyOwner(msg.sender) {
         
         uint _createdAt = block.timestamp;
@@ -92,5 +95,21 @@ contract TicketCore is IssueVipTicket {
     constructor() public {
         owner = msg.sender;
     }
-    
+
+    function getTicket(uint _ticketID) public view returns (
+        address _owner,
+        uint _area,
+        string memory _ticketType,
+        uint _createdAt
+    ) {
+        _owner =  ticketIndexToOwner[_ticketID];
+        
+        require(_owner == msg.sender, "You are not owner of this ticket");
+        
+        Ticket storage _ticket = tickets[_ticketID];
+
+        _area = _ticket.area;
+        _ticketType = _ticket.ticketType;
+        _createdAt = _ticket.createdAt;
+    }
 }
