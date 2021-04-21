@@ -77,6 +77,13 @@ contract IssueVipTicket is TicketBase {
         
         issuedTicketsCount++;
     }
+
+    function giveVipTicket(uint _ticketID, address _newOwner) public onlyOwner(msg.sender) {
+        
+        uint _createdAt = block.timestamp;
+        
+        _transfer(_ticketID, _newOwner, _createdAt);
+    }
     
 }
 
