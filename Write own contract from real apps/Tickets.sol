@@ -27,6 +27,15 @@ contract TicketBase is TicketAccessControl {
     
     event IssueNewTicket(address owner, uint ticketID, uint createdAt);
     event CancelTicket(address owner, uint ticketID, uint canceledAt);
+
+    function _transfer(uint _ticketID, address _owner, uint _createdAt) internal returns (uint) {
+
+        ticketIndexToOwner[_ticketID] = _owner;
+        
+        emit IssueNewTicket(_owner, _ticketID, _createdAt);
+
+        return _ticketID;
+    }
     
     function _createTicket(uint _area, string memory _ticketType, address _owner) internal returns (uint _ticketID) {
         
@@ -40,9 +49,7 @@ contract TicketBase is TicketAccessControl {
         
         _ticketID = tickets.length - 1;
         
-        ticketIndexToOwner[_ticketID] = _owner;
-        
-        emit IssueNewTicket(_owner, _ticketID, _createdAt);
+        _transfer(_ticketID, _owner, _createdAt);
     }
     
     function _deleteTicket(address _owner, uint _ticketID) external {
@@ -59,6 +66,8 @@ contract TicketBase is TicketAccessControl {
 contract IssueVipTicket is TicketBase {
     
     uint constant VIP_TICKETS_LIMITS = 5;
+
+    // function createVipTicket() onlyOwner returns (uint _ticket)
     
 }
 
