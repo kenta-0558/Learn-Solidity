@@ -18,5 +18,8 @@ contract CryptoPunksMarket {
         address bidder;
         uint value;
     }
+
+    mapping (uint => Offer) public punksOfferedForSale;
+    mapping (uint => Bid) public punkBids;
     
 }
