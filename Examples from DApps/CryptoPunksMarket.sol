@@ -42,4 +42,14 @@ contract CryptoPunksMarket {
     
     mapping (address => uint) public pendingWithdrawals;
 
+    event Assign(address indexed to, uint256 punkIndex);
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event PunkTransfer(address indexed from, address indexed to, uint256 punkIndex);
+    event PunkOffered(uint indexed punkIndex, uint minValue, address indexed toAddress);
+    event PunkBidEntered(uint indexed punkIndex, uint value, address indexed fromAddress);
+    event PunkBidWithdrawn(uint indexed punkIndex, uint value, address indexed fromAddress);
+    event PunkBought(uint indexed punkIndex, uint value, address indexed fromAddress, address indexed toAddress);
+    event PunkNoLongerForSale(uint indexed punkIndex);
+    
+
 }
