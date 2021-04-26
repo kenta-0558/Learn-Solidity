@@ -2,6 +2,10 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.4.22 <0.9.0;
+
+
 contract CryptoPunksMarket {
     
     struct Offer {
@@ -56,6 +60,11 @@ contract CryptoPunksMarket {
         _;
     }
     
+    modifier areAllPunksAssigned {
+        require(!allPunksAssigned, "all punks have been already assigned");
+        _;
+    }
+    
     // why payable ???
     // why not with constructor ???
     function initializeCryptoPunksMarket() public payable {
@@ -68,9 +77,10 @@ contract CryptoPunksMarket {
         decimals = 0;
     }
     
-    function setInitialOwner(address _to, uint _punkIndex) public onlyOwner {
-        require(!allPunksAssigned, "all punks have been already assigned");
+    function setInitialOwner(address _to, uint _punkIndex) public onlyOwner areAllPunksAssigned {
+        
         require(_punkIndex <= 10000, "no more punk will be set");
+        
         if (punkIndexToAddress[_punkIndex] != _to) {
             if (punkIndexToAddress[_punkIndex] != address(0)) {
                 balanceOf[punkIndexToAddress[_punkIndex]]--;
@@ -92,5 +102,9 @@ contract CryptoPunksMarket {
     function allInitialOnersAssigned() public onlyOwner {
         allPunksAssigned = true;
     }
+    
+    // function getPunk(uint _punkIndex) {
+        
+    // }
     
 }
