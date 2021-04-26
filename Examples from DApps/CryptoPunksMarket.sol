@@ -41,4 +41,5 @@ contract CryptoPunksMarket {
     mapping (address => uint256) public balanceOf;
     
     mapping (address => uint) public pendingWithdrawals;
+
 }
