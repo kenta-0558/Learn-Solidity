@@ -86,4 +86,9 @@ contract CryptoPunksMarket {
         }
     }
 
+    function allInitialOnersAssigned() public {
+        require(msg.sender == owner, "You have no right to call this function");    
+        allPunksAssigned = true;
+    }
+
 }
