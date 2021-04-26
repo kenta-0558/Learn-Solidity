@@ -65,7 +65,7 @@ contract CryptoPunksMarket {
 
     function setInitialOwner(address _to, uint _punkIndex) public {
         require(msg.sender == owner, "You have no right to call this function");
-        require(allPunksAssigned, "all punks have been already assigned");
+        require(!allPunksAssigned, "all punks have been already assigned");
         require(_punkIndex <= 10000, "no more punk will be set");
         if (punkIndexToAddress[_punkIndex] != _to) {
             if (punkIndexToAddress[_punkIndex] != address(0)) {
