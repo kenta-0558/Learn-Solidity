@@ -2,10 +2,6 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.4.22 <0.9.0;
-
-
 contract CryptoPunksMarket {
     
     struct Offer {
@@ -101,10 +97,18 @@ contract CryptoPunksMarket {
     
     function allInitialOnersAssigned() public onlyOwner {
         allPunksAssigned = true;
-    }
-    
-    // function getPunk(uint _punkIndex) {
+    }   
+
+    function getPunk(uint _punkIndex) external areAllPunksAssigned {
         
-    // }
+        require(punksRemainingToAssign != 0, "There is no more remaining punk");
+        require(punkIndexToAddress[_punkIndex] == address(0), "You can not get punk with this index");
+        require(_punkIndex <= 10000, "index must be under 10000");
+        
+        punkIndexToAddress[_punkIndex] = msg.sender;
+        balanceOf[msg.sender]++;
+        punksRemainingToAssign--;
+        emit Assign(msg.sender, _punkIndex);
+    }
     
 }
