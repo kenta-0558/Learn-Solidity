@@ -27,7 +27,7 @@ contract CryptoPunksMarket {
     address owner;
     string public standard = "CryptoPunks";
     string public name;
-    string public symbol;
+    // string public symbol;
     uint8 public decimals;
     uint256 public totalSupply;
     
@@ -41,7 +41,7 @@ contract CryptoPunksMarket {
     mapping (address => uint256) public balanceOf;
     
     mapping (address => uint) public pendingWithdrawals;
-
+    
     event Assign(address indexed to, uint256 punkIndex);
     event Transfer(address indexed from, address indexed to, uint256 value);
     event PunkTransfer(address indexed from, address indexed to, uint256 punkIndex);
@@ -51,8 +51,13 @@ contract CryptoPunksMarket {
     event PunkBought(uint indexed punkIndex, uint value, address indexed fromAddress, address indexed toAddress);
     event PunkNoLongerForSale(uint indexed punkIndex);
     
+    modifier onlyOwner {
+        require(owner == msg.sender, "You have no right to call this function");
+        _;
+    }
+    
     // why payable ???
-     // why not with constructor ???
+    // why not with constructor ???
     function initializeCryptoPunksMarket() public payable {
         
         owner = msg.sender;
@@ -62,9 +67,8 @@ contract CryptoPunksMarket {
         // symbol = "[]";
         decimals = 0;
     }
-
-    function setInitialOwner(address _to, uint _punkIndex) public {
-        require(msg.sender == owner, "You have no right to call this function");
+    
+    function setInitialOwner(address _to, uint _punkIndex) public onlyOwner {
         require(!allPunksAssigned, "all punks have been already assigned");
         require(_punkIndex <= 10000, "no more punk will be set");
         if (punkIndexToAddress[_punkIndex] != _to) {
@@ -78,17 +82,15 @@ contract CryptoPunksMarket {
             emit Assign(_to, _punkIndex);
         }
     }
-
-    function setInitialOwners(address[] memory _addresses, uint[] memory _indices) public {
-        require(msg.sender == owner, "You have no right to call this function");
+    
+    function setInitialOwners(address[] calldata _addresses, uint[] calldata  _indices) public onlyOwner {
         for (uint i = 0; i < _addresses.length; i++) {
             setInitialOwner(_addresses[i], _indices[i]);
         }
     }
-
-    function allInitialOnersAssigned() public {
-        require(msg.sender == owner, "You have no right to call this function");    
+    
+    function allInitialOnersAssigned() public onlyOwner {
         allPunksAssigned = true;
     }
-
+    
 }
