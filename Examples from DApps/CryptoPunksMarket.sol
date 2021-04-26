@@ -79,4 +79,11 @@ contract CryptoPunksMarket {
         }
     }
 
+    function setInitialOwners(address[] memory _addresses, uint[] memory _indices) public {
+        require(msg.sender == owner, "You have no right to call this function");
+        for (uint i = 0; i < _addresses.length; i++) {
+            setInitialOwner(_addresses[i], _indices[i]);
+        }
+    }
+
 }
