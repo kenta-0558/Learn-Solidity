@@ -83,7 +83,7 @@ contract CryptoPunksMarket {
         }
     }
     
-    function setInitialOwners(address[] calldata _addresses, uint[] calldata  _indices) public onlyOwner {
+    function setInitialOwners(address[] calldata _addresses, uint[] calldata  _indices) external onlyOwner {
         for (uint i = 0; i < _addresses.length; i++) {
             setInitialOwner(_addresses[i], _indices[i]);
         }
