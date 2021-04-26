@@ -51,5 +51,15 @@ contract CryptoPunksMarket {
     event PunkBought(uint indexed punkIndex, uint value, address indexed fromAddress, address indexed toAddress);
     event PunkNoLongerForSale(uint indexed punkIndex);
     
+    // why payable ???
+    function initializeCryptoPunksMarket() public payable {
+        
+        owner = msg.sender;
+        totalSupply = 10000;
+        punksRemainingToAssign = totalSupply;
+        name = "CRYPTOPUNKS";
+        // symbol = "[]";
+        decimals = 0;
+    }
 
 }
