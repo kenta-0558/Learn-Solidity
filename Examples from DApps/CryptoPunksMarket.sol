@@ -52,6 +52,7 @@ contract CryptoPunksMarket {
     event PunkNoLongerForSale(uint indexed punkIndex);
     
     // why payable ???
+     // why not with constructor ???
     function initializeCryptoPunksMarket() public payable {
         
         owner = msg.sender;
