@@ -136,4 +136,9 @@ contract CryptoPunksMarket {
             punkBids[_punkIndex] = Bid(false, _punkIndex, address(0), 0);
         }
     }
+
+    function punkNoLongerForSale(uint _punkIndex) public areAllPunksAssigned validPunk(_punkIndex) onlyPunkOwner(_punkIndex) {
+        punksOfferedForSale[_punkIndex] = Offer(false, _punkIndex, msg.sender, 0, address(0));
+        emit PunkNoLongerForSale(_punkIndex);
+    }
 }
