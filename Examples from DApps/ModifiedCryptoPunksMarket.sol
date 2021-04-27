@@ -142,8 +142,30 @@ contract CryptoPunksMarket {
         emit PunkNoLongerForSale(_punkIndex);
     }
 
-    function offerPunkForSale(uint _punkIndex, uint minSalePriceInWei) public areAllPunksAssigned validPunk(_punkIndex) onlyPunkOwner(_punkIndex) {
+    function offerPunkForSale(
+        uint _punkIndex, 
+        uint minSalePriceInWei
+    ) 
+        public 
+        areAllPunksAssigned 
+        validPunk(_punkIndex) 
+        onlyPunkOwner(_punkIndex) 
+    {
         punksOfferedForSale[_punkIndex] = Offer(true, _punkIndex, msg.sender, minSalePriceInWei, address(0));
         emit PunkOffered(_punkIndex, minSalePriceInWei, address(0));
+    }
+
+    function offerPunkForSaleToAddress(
+        uint _punkIndex, 
+        uint minSalePriceInWei, 
+        address _toAddress
+    )
+        public 
+        areAllPunksAssigned
+        validPunk(_punkIndex)
+        onlyPunkOwner(_punkIndex)
+    {
+        punksOfferedForSale[_punkIndex] = Offer(true, _punkIndex, msg.sender, minSalePriceInWei, _toAddress);
+        emit PunkOffered(_punkIndex, minSalePriceInWei, _toAddress);
     }
 }
