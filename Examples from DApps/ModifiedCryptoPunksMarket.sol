@@ -120,9 +120,9 @@ contract CryptoPunksMarket {
     
     function transferPunk(address _to, uint _punkIndex) public areAllPunksAssigned validPunk(_punkIndex) onlyPunkOwner(_punkIndex) {
         
-        // if (punksOfferedForSale[_punkIndex].isForSale) {
-        //     punkNoLongerForSale(_punkIndex);
-        // } 
+        if (punksOfferedForSale[_punkIndex].isForSale) {
+            punkNoLongerForSale(_punkIndex);
+        } 
         punkIndexToAddress[_punkIndex] = _to;
         balanceOf[msg.sender]--;
         balanceOf[_to]++;
