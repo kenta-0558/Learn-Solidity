@@ -61,6 +61,11 @@ contract CryptoPunksMarket {
         _;
     }
     
+    modifier validPunk(uint _punkIndex) {
+        require(_punkIndex <= 10000, "no more punk will be set");
+        _;
+    }
+    
     // why payable ???
     // why not with constructor ???
     function initializeCryptoPunksMarket() public payable {
@@ -73,9 +78,7 @@ contract CryptoPunksMarket {
         decimals = 0;
     }
     
-    function setInitialOwner(address _to, uint _punkIndex) public onlyOwner areAllPunksAssigned {
-        
-        require(_punkIndex <= 10000, "no more punk will be set");
+    function setInitialOwner(address _to, uint _punkIndex) public onlyOwner areAllPunksAssigned validPunk(_punkIndex) {
         
         if (punkIndexToAddress[_punkIndex] != _to) {
             if (punkIndexToAddress[_punkIndex] != address(0)) {
@@ -97,14 +100,13 @@ contract CryptoPunksMarket {
     
     function allInitialOnersAssigned() public onlyOwner {
         allPunksAssigned = true;
-    }   
-
-    function getPunk(uint _punkIndex) external areAllPunksAssigned {
+    }
+    
+    function getPunk(uint _punkIndex) external areAllPunksAssigned validPunk(_punkIndex) {
         
         require(punksRemainingToAssign != 0, "There is no more remaining punk");
         require(punkIndexToAddress[_punkIndex] == address(0), "You can not get punk with this index");
-        require(_punkIndex <= 10000, "index must be under 10000");
-        
+       
         punkIndexToAddress[_punkIndex] = msg.sender;
         balanceOf[msg.sender]++;
         punksRemainingToAssign--;
