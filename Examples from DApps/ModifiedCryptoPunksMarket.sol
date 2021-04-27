@@ -66,6 +66,11 @@ contract CryptoPunksMarket {
         _;
     }
     
+    modifier onlyPunkOwner(uint _punkIndex) {
+      require(punkIndexToAddress[_punkIndex] == msg.sender, "You habe no right to transfer this punk.");      
+      _;
+    }
+    
     // why payable ???
     // why not with constructor ???
     function initializeCryptoPunksMarket() public payable {
@@ -112,10 +117,9 @@ contract CryptoPunksMarket {
         punksRemainingToAssign--;
         emit Assign(msg.sender, _punkIndex);
     }
-
-    function transferPunk(address _to, uint _punkIndex) public areAllPunksAssigned validPunk(_punkIndex) {
+    
+    function transferPunk(address _to, uint _punkIndex) public areAllPunksAssigned validPunk(_punkIndex) onlyPunkOwner(_punkIndex) {
         
-        require(punkIndexToAddress[_punkIndex] == msg.sender, "You habe no right to transfer this punk."); 
         // if (punksOfferedForSale[_punkIndex].isForSale) {
         //     punkNoLongerForSale(_punkIndex);
         // } 
@@ -131,7 +135,5 @@ contract CryptoPunksMarket {
             pendingWithdrawals[_to] += bid.value;
             punkBids[_punkIndex] = Bid(false, _punkIndex, address(0), 0);
         }
-        
     }
-    
 }
