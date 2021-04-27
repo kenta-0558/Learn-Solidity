@@ -112,5 +112,26 @@ contract CryptoPunksMarket {
         punksRemainingToAssign--;
         emit Assign(msg.sender, _punkIndex);
     }
+
+    function transferPunk(address _to, uint _punkIndex) public areAllPunksAssigned validPunk(_punkIndex) {
+        
+        require(punkIndexToAddress[_punkIndex] == msg.sender, "You habe no right to transfer this punk."); 
+        // if (punksOfferedForSale[_punkIndex].isForSale) {
+        //     punkNoLongerForSale(_punkIndex);
+        // } 
+        punkIndexToAddress[_punkIndex] = _to;
+        balanceOf[msg.sender]--;
+        balanceOf[_to]++;
+        
+        emit Transfer(msg.sender, _to, 1); // value is 1 ???
+        emit PunkTransfer(msg.sender, _to, _punkIndex);
+        
+        Bid memory bid = punkBids[_punkIndex];
+        if (bid.bidder == _to) {
+            pendingWithdrawals[_to] += bid.value;
+            punkBids[_punkIndex] = Bid(false, _punkIndex, address(0), 0);
+        }
+        
+    }
     
 }
