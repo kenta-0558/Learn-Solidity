@@ -190,11 +190,11 @@ contract CryptoPunksMarket {
         balanceOf[msg.sender]++;
         balanceOf[seller]--;
         
-        Transfer(seller, msg.sender, 1); // why value 1 ???
+        emit Transfer(seller, msg.sender, 1); // why value 1 ???
         
         punkNoLongerForSale(_punkIndex);
         pendingWithdrawals[seller] += msg.value;
-        PunkBought(_punkIndex, msg.value, seller, msg.sender);
+        emit PunkBought(_punkIndex, msg.value, seller, msg.sender);
         
         Bid memory bid = punkBids[_punkIndex];
         if (bid.bidder == msg.sender) {
