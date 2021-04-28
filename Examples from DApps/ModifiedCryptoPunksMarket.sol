@@ -232,4 +232,20 @@ contract CryptoPunksMarket {
         punkBids[_punkIndex] = Bid(true, _punkIndex, msg.sender, msg.value);
         emit PunkBidEntered(_punkIndex, msg.value, msg.sender);
     }
+
+    function withdrawBidForPunk(
+        uint _punkIndex
+    ) 
+        public
+        validPunk(_punkIndex)
+    {
+        Bid memory bid = punkBids[_punkIndex];
+        
+        require(bid.bidder == msg.sender, "You have no right to cancel this bid");
+        
+        uint amount = bid.value;
+        payable(msg.sender).transfer(amount);
+        punkBids[_punkIndex] = Bid(false, _punkIndex, address(0), 0);
+        emit PunkBidWithdrawn(_punkIndex, bid.value, msg.sender);
+    }
 }
