@@ -208,4 +208,28 @@ contract CryptoPunksMarket {
         pendingWithdrawals[msg.sender] = 0;
         payable(msg.sender).transfer(amount);
     }
+
+    function enterBidForPunk(
+        uint _punkIndex
+    ) 
+        public 
+        payable 
+        validPunk(_punkIndex)
+    {
+        require(punkIndexToAddress[_punkIndex] != msg.sender, "You own already this punk");
+        require(punkIndexToAddress[_punkIndex] != address(0), "Nobady has owned this punk until now");
+        require(msg.value != 0, "You have to bid with sending value");
+        
+        
+        Bid memory existingBid = punkBids[_punkIndex];
+        
+        require(msg.value > existingBid.value, "your bid value is not enough to beat existing bid");
+        
+        if (existingBid.value > 0) {
+            pendingWithdrawals[existingBid.bidder] += existingBid.value;
+        }
+        
+        punkBids[_punkIndex] = Bid(true, _punkIndex, msg.sender, msg.value);
+        emit PunkBidEntered(_punkIndex, msg.value, msg.sender);
+    }
 }
