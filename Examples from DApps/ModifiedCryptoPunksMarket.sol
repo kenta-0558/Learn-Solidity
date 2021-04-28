@@ -168,4 +168,39 @@ contract CryptoPunksMarket {
         punksOfferedForSale[_punkIndex] = Offer(true, _punkIndex, msg.sender, minSalePriceInWei, _toAddress);
         emit PunkOffered(_punkIndex, minSalePriceInWei, _toAddress);
     }
+
+    function buyPunk(
+        uint _punkIndex
+    ) 
+        public 
+        payable 
+        areAllPunksAssigned 
+        validPunk(_punkIndex)    
+    {
+        Offer memory offer = punksOfferedForSale[_punkIndex];
+        
+        address seller = offer.seller;
+        
+        require(seller == punkIndexToAddress[_punkIndex], "Someone own this punk and he will not sell this");
+        require(offer.isForSale, "This punk is not on sale");
+        require(offer.onlySellTo == address(0) || offer.onlySellTo == msg.sender, "You can not buy this punk");
+        require(msg.value >= offer.minValue, "You have to send more value");
+        
+        punkIndexToAddress[_punkIndex] = msg.sender;
+        balanceOf[msg.sender]++;
+        balanceOf[seller]--;
+        
+        Transfer(seller, msg.sender, 1); // why value 1 ???
+        
+        punkNoLongerForSale(_punkIndex);
+        pendingWithdrawals[seller] += msg.value;
+        PunkBought(_punkIndex, msg.value, seller, msg.sender);
+        
+        Bid memory bid = punkBids[_punkIndex];
+        if (bid.bidder == msg.sender) {
+            pendingWithdrawals[msg.sender] += bid.value;
+            punkBids[_punkIndex] =  Bid(false, _punkIndex, address(0), 0);
+        }
+        
+    }
 }
