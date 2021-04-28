@@ -201,6 +201,11 @@ contract CryptoPunksMarket {
             pendingWithdrawals[msg.sender] += bid.value;
             punkBids[_punkIndex] =  Bid(false, _punkIndex, address(0), 0);
         }
-        
+    }
+
+    function withdraw() public {
+        uint amount = pendingWithdrawals[msg.sender];
+        pendingWithdrawals[msg.sender] = 0;
+        payable(msg.sender).transfer(amount);
     }
 }
