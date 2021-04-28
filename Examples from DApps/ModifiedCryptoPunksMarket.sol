@@ -43,7 +43,7 @@ contract CryptoPunksMarket {
     mapping (address => uint) public pendingWithdrawals;
     
     event Assign(address indexed to, uint256 punkIndex);
-    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Transfer(address indexed from, address indexed to, uint256 value); // what does value mean in this case?
     event PunkTransfer(address indexed from, address indexed to, uint256 punkIndex);
     event PunkOffered(uint indexed punkIndex, uint minValue, address indexed toAddress);
     event PunkBidEntered(uint indexed punkIndex, uint value, address indexed fromAddress);
