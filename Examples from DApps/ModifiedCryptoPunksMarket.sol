@@ -73,7 +73,7 @@ contract CryptoPunksMarket {
     
     // why payable ???
     // why not with constructor ???
-    function initializeCryptoPunksMarket() public payable {
+    function initializeCryptoPunksMarket() public {
         
         owner = msg.sender;
         totalSupply = 10000;
