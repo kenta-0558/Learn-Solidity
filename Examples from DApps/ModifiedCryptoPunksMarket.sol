@@ -43,7 +43,7 @@ contract CryptoPunksMarket {
     mapping (address => uint) public pendingWithdrawals;
     
     event Assign(address indexed to, uint256 punkIndex);
-    event Transfer(address indexed from, address indexed to, uint256 value); // what does value mean in this case?
+    event Transfer(address indexed from, address indexed to, uint256 value); // what does value mean in this case? number of punks?
     event PunkTransfer(address indexed from, address indexed to, uint256 punkIndex);
     event PunkOffered(uint indexed punkIndex, uint minValue, address indexed toAddress);
     event PunkBidEntered(uint indexed punkIndex, uint value, address indexed fromAddress);
@@ -190,7 +190,7 @@ contract CryptoPunksMarket {
         balanceOf[msg.sender]++;
         balanceOf[seller]--;
         
-        emit Transfer(seller, msg.sender, 1); // why value 1 ???
+        emit Transfer(seller, msg.sender, 1); 
         
         punkNoLongerForSale(_punkIndex);
         pendingWithdrawals[seller] += msg.value;
@@ -248,4 +248,33 @@ contract CryptoPunksMarket {
         punkBids[_punkIndex] = Bid(false, _punkIndex, address(0), 0);
         emit PunkBidWithdrawn(_punkIndex, bid.value, msg.sender);
     }
+
+    function acceptBidForPunk(
+        uint _punkIndex, 
+        uint minPrice
+    ) 
+        public
+        validPunk(_punkIndex)
+    {
+        require(punkIndexToAddress[_punkIndex] == msg.sender, "You are not owner of this punk");  
+        
+        address seller = msg.sender;
+        Bid memory bid = punkBids[_punkIndex];
+        
+        require(bid.value != 0, "This bid has no price for punk");
+        require(bid.value >= minPrice, "This bid does not have enough price");
+        
+        punkIndexToAddress[_punkIndex] = bid.bidder;
+        balanceOf[bid.bidder]++;
+        balanceOf[seller]--;
+        emit Transfer(seller, bid.bidder, 1);
+        
+        uint amount = bid.value;
+        pendingWithdrawals[seller] += amount;
+        
+        punksOfferedForSale[_punkIndex] = Offer(false, _punkIndex, bid.bidder, 0, address(0));
+        punkBids[_punkIndex] = Bid(false, _punkIndex, address(0), 0);
+        emit PunkBought(_punkIndex, amount, seller, bid.bidder);
+    }
+
 }
