@@ -32,5 +32,11 @@ contract Crud {
         uint index = find(_id);
         users[index].name = _newName;
     } 
+
+    function read(uint _id) public view returns (uint, string memory) {
+        
+        uint index = find(_id);
+        return (users[index].id, users[index].name);
+    }
     
 }
