@@ -11,4 +11,9 @@ contract Crud {
     
     User[] public users;
     uint public nextId = 1;
+
+    function create(string memory _name) public {
+        users.push(User(nextId, _name));
+        nextId++;
+    }
 }
