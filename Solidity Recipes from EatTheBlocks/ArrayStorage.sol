@@ -27,5 +27,10 @@ contract Crud {
         
         revert("User does not exist");
     }
+
+    function update(uint _id, string memory _newName) public {
+        uint index = find(_id);
+        users[index].name = _newName;
+    } 
     
 }
