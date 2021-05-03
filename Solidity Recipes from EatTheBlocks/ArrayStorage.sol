@@ -34,9 +34,13 @@ contract Crud {
     } 
 
     function read(uint _id) public view returns (uint, string memory) {
-        
         uint index = find(_id);
         return (users[index].id, users[index].name);
+    }
+
+    function destroy(uint _id) public {
+        uint index = find(_id);
+        delete users[index];
     }
     
 }
