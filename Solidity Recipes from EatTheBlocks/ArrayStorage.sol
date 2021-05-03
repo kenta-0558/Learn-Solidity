@@ -16,4 +16,16 @@ contract Crud {
         users.push(User(nextId, _name));
         nextId++;
     }
+
+    function find(uint _id) view internal returns (uint) {
+        
+        for (uint i = 0; i < users.length; i++) {
+            if (users[i].id == _id) {
+                return i;
+            }
+        }
+        
+        revert("User does not exist");
+    }
+    
 }
