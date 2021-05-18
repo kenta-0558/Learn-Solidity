@@ -15,5 +15,14 @@ contract Twitter {
     mapping(address => uint[]) private tweetsOf;
 
     uint private nextTweetId;
+
+    event TweetSent(
+        uint id,
+        address indexed author,
+        string content,
+        uint createdAt    
+    );
+
+    
     
 }
