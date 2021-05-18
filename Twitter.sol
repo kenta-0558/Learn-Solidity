@@ -4,4 +4,11 @@ pragma solidity ^0.8.4;
 
 contract Twitter {
     
+    struct Tweet {
+        uint id;
+        address author;
+        string content;
+        uint createdAt;
+    }
+    
 }
