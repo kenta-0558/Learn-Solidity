@@ -10,5 +10,10 @@ contract Twitter {
         string content;
         uint createdAt;
     }
+
+    mapping(uint => Tweet) private tweets;
+    mapping(address => uint[]) private tweetsOf;
+
+    uint private nextTweetId;
     
 }
