@@ -11,9 +11,18 @@ contract Twitter {
         uint createdAt;
     }
 
+    struct Message {
+        uint id;
+        address from;
+        address to;
+        string content;
+        uint createdAt;
+    }
+
     mapping(uint => Tweet) public tweets;
     mapping(address => uint[]) private tweetsOf;
     mapping(address => address[]) public following;
+    mapping(uint => Message[]) public conversations;
 
     uint private nextTweetId;
 
