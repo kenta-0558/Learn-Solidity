@@ -27,4 +27,17 @@ contract Twitter {
         _tweet(msg.sender, _content);
     }
     
+    function _tweet(
+        address _from,
+        string memory _content
+    )
+        internal 
+        canOperate(_from)
+    {
+        tweets[nextTweetId] = Tweet(nextTweetId, _from, _content, block.timestamp);
+        tweetsOf[_from].push(nextTweetId);
+        emit TweetSent(nextTweetId, _from, _content, block.timestamp);
+        nextTweetId++;
+    }
+    
 }
