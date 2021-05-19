@@ -25,6 +25,7 @@ contract Twitter {
     mapping(uint => Message[]) public conversations;
 
     uint private nextTweetId;
+    uint private nextMassageId;
 
     event TweetSent(
         uint id,
