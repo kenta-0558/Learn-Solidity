@@ -40,5 +40,9 @@ contract Twitter {
         emit TweetSent(nextTweetId, _from, _content, block.timestamp);
         nextTweetId++;
     }
+
+    function follow(address _followed) external {
+        following[msg.sender].push(_followed);
+    }
     
 }
