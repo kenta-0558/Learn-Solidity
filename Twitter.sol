@@ -34,6 +34,13 @@ contract Twitter {
         uint createdAt    
     );
 
+    event MessageSent(
+        uint id,
+        address from,
+        address to,
+        uint createdAt
+    );
+
     function tweet(string calldata _content) external {
         _tweet(msg.sender, _content);
     }
