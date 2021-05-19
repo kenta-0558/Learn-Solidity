@@ -11,7 +11,7 @@ contract Twitter {
         uint createdAt;
     }
 
-    mapping(uint => Tweet) private tweets;
+    mapping(uint => Tweet) public tweets;
     mapping(address => uint[]) private tweetsOf;
     mapping(address => address[]) public following;
 
@@ -40,11 +40,12 @@ contract Twitter {
         emit TweetSent(nextTweetId, _from, _content, block.timestamp);
         nextTweetId++;
     }
-
+    
     function follow(address _followed) external {
+        require(_followed != msg.sender, "You can not follow yourself");
         following[msg.sender].push(_followed);
     }
-
+    
     function getFollowing() external view returns (address[] memory){
         return following[msg.sender];
     }
