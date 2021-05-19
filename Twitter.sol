@@ -106,5 +106,9 @@ contract Twitter {
         uint conversationId = addressToIndex[_address1] + addressToIndex[_address2];
         return conversations[conversationId];
     }
+
+    function getTweetsOf(address _userAddress) external view returns (uint[] memory) {
+        return tweetsOf[_userAddress];
+    }
     
 }
