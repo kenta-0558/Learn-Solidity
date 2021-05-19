@@ -13,6 +13,7 @@ contract Twitter {
 
     mapping(uint => Tweet) private tweets;
     mapping(address => uint[]) private tweetsOf;
+    mapping(address => address[]) public following;
 
     uint private nextTweetId;
 
@@ -32,7 +33,7 @@ contract Twitter {
         string memory _content
     )
         internal 
-        canOperate(_from)
+        // canOperate(_from)
     {
         tweets[nextTweetId] = Tweet(nextTweetId, _from, _content, block.timestamp);
         tweetsOf[_from].push(nextTweetId);
