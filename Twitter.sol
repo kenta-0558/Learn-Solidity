@@ -23,6 +23,8 @@ contract Twitter {
         uint createdAt    
     );
 
-    
+    function tweet(string calldata _content) external {
+        _tweet(msg.sender, _content);
+    }
     
 }
