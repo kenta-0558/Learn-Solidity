@@ -66,5 +66,14 @@ contract Twitter {
     function getFollowing() external view returns (address[] memory){
         return following[msg.sender];
     }
+
+    function sendMessage(
+        address _to,
+        string calldata _content
+    ) 
+        external 
+    {
+        _sendMessage(_to, _content);
+    }
     
 }
