@@ -110,5 +110,4 @@ contract Twitter {
     function getTweetsOf(address _userAddress) external view returns (uint[] memory) {
         return tweetsOf[_userAddress];
     }
-    
 }
