@@ -1,9 +1,10 @@
-pragma solidity ^0.8.3;
+pragma solidity ^0.4.23;
 
 import "./Storage.sol";
-import "@optionality.io/clone-factory/contracts/CloneFactory.sol";
+import "./CloneFactory.sol";
 
-contract StorageFactory {
+
+contract StorageFactory is CloneFactory {
     address public admin;
     address public implementation;
     address[] public clonedContracts;
@@ -13,7 +14,7 @@ contract StorageFactory {
     }
 
     function createStorage() public {
-        require(admin == msg.sedner, "Only admin can clone contract");
+        require(admin == msg.sender, "Only admin can clone contract");
         address clone = createClone(implementation);
 
         clonedContracts.push(clone);    
