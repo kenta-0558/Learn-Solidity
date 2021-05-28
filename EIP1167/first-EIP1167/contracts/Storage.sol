@@ -1,10 +1,10 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.8.3;
 
 
 contract Storage {
     string public data;
 
-    function setData(string _data) external {
+    function setData(string calldata _data) external {
         data = _data;
     }    
 }

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.8.3;
 
 import "./Storage.sol";
 import "./CloneFactory.sol";
@@ -8,9 +8,10 @@ contract StorageFactory is CloneFactory {
     address public admin;
     address public implementation;
     address[] public clonedContracts;
-    
-    function storageFactory(address _implementation) public {
+
+    constructor(address _implementation) {
         implementation = _implementation;
+        admin = msg.sender;
     }
 
     function createStorage() public {
