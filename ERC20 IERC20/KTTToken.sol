@@ -16,8 +16,14 @@ contract KTTToken is IKTTToken {
     uint256 private _totalSupply;
     string constant public _NAME = "KTT TOKEN";
     string constant public _SYMBOL = "LUSD";
+
+    mapping (address => uint256) public _balances;
     
     function totalSupply() external view override returns (uint256) {
         return _totalSupply;
+    }
+
+    function balanceOf(address _account) external view override returns (uint256) {
+        return _balances[_account];    
     }
 }
