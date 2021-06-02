@@ -6,7 +6,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 interface IKTTToken is IERC20 {
     event KTTTokenBalanceUpdated(address _user, uint _amount);
-    
+
     function mint(address _account, uint256 _amount) external;
     function burn(address _account, uint256 _amount) external;    
 } 
@@ -17,4 +17,7 @@ contract KTTToken is IKTTToken {
     string constant public _NAME = "KTT TOKEN";
     string constant public _SYMBOL = "LUSD";
     
+    function totalSupply() external view override returns (uint256) {
+        return _totalSupply;
+    }
 }
