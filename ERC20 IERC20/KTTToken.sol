@@ -26,4 +26,8 @@ contract KTTToken is IKTTToken {
     function balanceOf(address _account) external view override returns (uint256) {
         return _balances[_account];    
     }
+
+    function checkAddress(address _address) internal {
+        require(_address != address(0), "No address");
+    }
 }
