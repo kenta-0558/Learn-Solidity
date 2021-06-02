@@ -5,6 +5,8 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 
 
 interface IKTTToken is IERC20 {
+    event KTTTokenBalanceUpdated(address _user, uint _amount);
+    
     function mint(address _account, uint256 _amount) external;
     function burn(address _account, uint256 _amount) external;    
 } 
