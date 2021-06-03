@@ -30,4 +30,16 @@ contract KTTToken is IKTTToken {
     function checkAddress(address _address) internal {
         require(_address != address(0), "No address");
     }
+
+    function mint(address _account, uint256 _amount) external override {
+        _mint(_account, _amount);
+    }
+    
+    // function _mint(address _account, uint256 _amount) internal {
+    //     checkAddress(_account); 
+        
+    //     _totalSupply += _amount;
+    //     _balances[_account] += _amount;
+    //     emit Transfer(address(0), _account, _amount);
+    // }
 }
