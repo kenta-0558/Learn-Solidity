@@ -14,6 +14,10 @@ interface IKTTToken is IERC20 {
     // function burn(address _account, uint256 _amount) external;    
 } 
 
+contract Pool {
+    
+}
+
 contract KTTToken is IKTTToken {
     using SafeMath for uint256;
     
