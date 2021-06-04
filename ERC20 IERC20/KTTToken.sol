@@ -47,6 +47,10 @@ contract KTTToken is IKTTToken {
         _balances[_account] += _amount;
         emit KTTTokenBalanceUpdated(_account, _amount);
     }
+
+    function sendToPool(uint256 _amount) external override {
+        _transfer(msg.sender, poolAddress, _amount);       
+    }
     
     function checkAddress(address _address) internal {
         require(_address != address(0), "No address");
