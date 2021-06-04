@@ -20,12 +20,18 @@ contract Pool {
 
 contract KTTToken is IKTTToken {
     using SafeMath for uint256;
+
+    address poolAddress;
     
     uint256 private _totalSupply;
     string constant public _NAME = "KTT TOKEN";
     string constant public _SYMBOL = "LUSD";
     
     mapping (address => uint256) public _balances;
+
+    constructor(address _poolAddress) {
+        poolAddress = _poolAddress;
+    }
     
     function totalSupply() external view override returns (uint256) {
         return _totalSupply;
