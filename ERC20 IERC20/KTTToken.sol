@@ -41,7 +41,7 @@ contract KTTToken is IKTTToken {
         return _balances[_account];    
     }
     
-    function _mint(address _account, uint256 _amount) external {
+    function mint(address _account, uint256 _amount) external {
         checkAddress(_account); 
         _totalSupply += _amount;
         _balances[_account] += _amount;
@@ -50,6 +50,21 @@ contract KTTToken is IKTTToken {
 
     function sendToPool(uint256 _amount) external override {
         _transfer(msg.sender, poolAddress, _amount);       
+    }
+
+    function transfer(address _recipient, uint256 _amount) external override returns (bool) {
+        checkAddress(_recipient);
+        _transfer(msg.sender, _recipient, _amount);
+        return true;
+    }
+    
+    function _transfer(address _sender, address _recipient, uint256 _amount) internal {
+        checkAddress(_sender);
+        checkAddress(_recipient);
+        
+        _balances[_sender] = _balances[_sender].sub(_amount);
+        _balances[_recipient] = _balances[_recipient].add(_amount);
+        emit Transfer(_sender, _recipient, _amount);
     }
     
     function checkAddress(address _address) internal {
