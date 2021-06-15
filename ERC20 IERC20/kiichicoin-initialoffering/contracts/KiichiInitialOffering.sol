@@ -12,7 +12,7 @@ contract KiichiInitialOffering is Ownable {
 
     uint public constant START = 1625832000; // Time Zone GMT
     uint public constant END = START + 5 days + 12 hours;
-    uint public constant TOTAL_DISTRIBUTE_AMOUNT = 36000;
+    uint public constant TOTAL_DISTRIBUTE_AMOUNT = 36000e8;
     uint constant MINIMAL_PROVIDE_AMOUNT = 100 ether;
     uint public totalProvided = 0;
     mapping(address => uint) public provided;
