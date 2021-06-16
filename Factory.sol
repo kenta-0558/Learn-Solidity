@@ -9,9 +9,10 @@ interface TemplateInterface {
 
 contract PlanFactory {
     
-    mapping(string => address) public templates;
+    mapping(string => address) public plans;
     
     uint nonce = 0;
+    
     
     
 }
